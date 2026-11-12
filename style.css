@@ -350,14 +350,12 @@ body.dark-theme::after {
   border-bottom: 1px solid var(--aip-glass-border);
 }
 
-.sidebar,
-.global-items,
-.tabs-header,
-.table-filter,
-.query-editor .toolbar,
-.sidebar-heading {
-  backdrop-filter: blur(22px) saturate(170%);
-}
+/*
+ * No backdrop-filter (or transform) on anything that holds a dropdown menu.
+ * Both turn the element into the containing block for its position: fixed
+ * menus, which then open in the wrong place and get clipped. The blobs are
+ * already blurred, so translucent panels read as glass without it.
+ */
 
 .sidebar.primary-sidebar {
   border-right: 1px solid var(--aip-glass-border);
@@ -375,7 +373,7 @@ body.dark-theme::after {
 /* Modals: frosted, thin border, big radius, neon halo. */
 .v--modal-box.v--modal {
   background: var(--aip-glass-strong) !important;
-  backdrop-filter: blur(28px) saturate(180%);
+  isolation: isolate;
   border: 1px solid var(--aip-glass-border);
   border-radius: 28px !important;
   box-shadow: var(--aip-shadow), var(--aip-glow) !important;
@@ -383,9 +381,17 @@ body.dark-theme::after {
   animation: aip-fade-up 0.55s var(--aip-ease) backwards;
 }
 
-.v--modal-overlay {
-  backdrop-filter: blur(6px);
+/* The frost lives on a pseudo-element so menus inside modals still work. */
+.v--modal-box.v--modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: blur(28px) saturate(180%);
+  pointer-events: none;
 }
+
 
 /* Menus and popovers */
 x-menu,
@@ -414,8 +420,8 @@ x-button.btn {
     filter 0.35s var(--aip-ease);
 }
 
-.btn:not(.btn-icon):not([disabled]):hover,
-x-button.btn:not(.btn-icon):not([disabled]):hover {
+.btn:not(.btn-icon):not([disabled]):not(:has(x-menu)):hover,
+x-button.btn:not(.btn-icon):not([disabled]):not(:has(x-menu)):hover {
   transform: translateY(-1px) scale(1.05);
 }
 
@@ -794,7 +800,6 @@ input[type="password"]:focus {
    ========================================================================== */
 
 .tabulator .tabulator-header {
-  backdrop-filter: blur(18px);
   background: var(--aip-glass) !important;
   border-bottom: 1px solid var(--aip-glass-border) !important;
 }
@@ -1102,7 +1107,6 @@ input[type="password"]:focus {
   border: 1px solid var(--aip-glass-border);
   border-radius: 22px !important;
   background: var(--aip-glass) !important;
-  backdrop-filter: blur(26px) saturate(180%);
   box-shadow: var(--aip-shadow), 0 60px 120px -30px rgba(99, 102, 241, 0.65);
   transform: perspective(1400px) rotateX(6deg) rotateY(-6deg) rotateZ(0.6deg);
   transform-origin: 50% 40%;
@@ -1113,7 +1117,7 @@ input[type="password"]:focus {
 /* It straightens out the moment you actually want to use it. */
 .connection-form-card:hover,
 .connection-form-card:focus-within {
-  transform: perspective(1400px) rotateX(0) rotateY(0) rotateZ(0);
+  transform: none;
   box-shadow: var(--aip-shadow), var(--aip-glow);
 }
 
