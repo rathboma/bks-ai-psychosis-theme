@@ -1267,63 +1267,87 @@ input[type="password"]:focus {
 .connection-types {
   display: grid !important;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 58px;
+  grid-auto-rows: 78px;
   grid-auto-flow: dense;
-  gap: 10px;
-  padding: 6px 4px 10px;
+  gap: 12px;
+  /* Room for the glow and the hover lift, which the scroll area would clip. */
+  padding: 10px 10px 16px;
 }
 
 .connection-types .connection-type {
+  position: relative;
+  box-sizing: border-box;
   display: flex !important;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  min-width: 0;
   height: auto !important;
-  padding: 8px !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  overflow: hidden;
   text-align: center;
   border-radius: 20px !important;
   border: 1px solid var(--aip-glass-border);
   background: var(--aip-glass);
   box-shadow: var(--aip-glow-soft);
   transition: transform 0.45s var(--aip-ease), box-shadow 0.45s var(--aip-ease),
-    background 0.45s var(--aip-ease);
+    border-color 0.45s var(--aip-ease);
   animation: aip-fade-up 0.6s var(--aip-ease) backwards;
 }
 
-.connection-types .connection-type:nth-child(7n + 1) {
+.connection-types .connection-type .name {
+  max-width: 100%;
+  height: auto !important;
+  line-height: 1.25 !important;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The search box stays pinned while tiles scroll, so it needs a solid backing. */
+.base-modal-body > .toolbar:has(+ .connection-types) {
+  z-index: 2;
+  margin: 0 -10px;
+  padding: 0 10px 10px;
+  background: var(--aip-menu-bg) !important;
+  box-shadow: 0 10px 14px -6px var(--aip-menu-bg);
+}
+
+/* The mosaic: a hero tile, a wide tile and a tall tile in every run of ten. */
+.connection-types .connection-type:nth-child(10n + 1) {
   grid-column: span 2;
   grid-row: span 2;
+  gap: 12px;
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(59, 130, 246, 0.18));
 }
 
-.connection-types .connection-type:nth-child(7n + 4) {
+.connection-types .connection-type:nth-child(10n + 4),
+.connection-types .connection-type:nth-child(10n + 8) {
   grid-column: span 2;
+  flex-direction: row;
+  gap: 10px;
 }
 
-.connection-types .connection-type:nth-child(7n + 6) {
+.connection-types .connection-type:nth-child(10n + 6) {
   grid-row: span 2;
+  gap: 12px;
   background: linear-gradient(180deg, rgba(236, 72, 153, 0.22), rgba(139, 92, 246, 0.12));
 }
 
-.connection-types .connection-type:nth-child(7n + 1) .database-icon {
-  width: 44px !important;
-  height: 44px !important;
-  padding: 10px !important;
+.connection-types .connection-type:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--aip-glow);
 }
 
-.connection-types .connection-type:nth-child(7n + 1) .database-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.connection-types .connection-type:hover,
 .connection-types .connection-type:has(input:checked),
 .connection-types .connection-type.active,
 .connection-types .connection-type.selected {
-  transform: scale(1.05);
-  box-shadow: var(--aip-glow);
-  background: var(--aip-tint);
+  border-color: var(--primary-9);
+  box-shadow: var(--aip-glow), inset 0 0 0 1px var(--primary-9);
 }
 
 .connection-types .connection-type input {
@@ -1334,11 +1358,41 @@ input[type="password"]:focus {
 
 /* Trope 18 */
 .connection-types .database-icon {
-  box-sizing: content-box;
-  padding: 6px;
+  flex: none;
+  box-sizing: border-box;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 32px !important;
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 7px;
   border-radius: 10px;
   background: var(--aip-tint);
   box-shadow: inset 0 0 0 1px var(--aip-glass-border);
+}
+
+.connection-types .database-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.connection-types .connection-type:nth-child(10n + 1) .database-icon {
+  width: 64px !important;
+  height: 64px !important;
+  padding: 14px;
+  border-radius: 18px;
+}
+
+.connection-types .connection-type:nth-child(10n + 6) .database-icon {
+  width: 44px !important;
+  height: 44px !important;
+  padding: 10px;
+  border-radius: 14px;
+}
+
+.connection-types .connection-type:nth-child(10n + 1) .name {
+  font-size: 15px;
 }
 
 /* ==========================================================================
