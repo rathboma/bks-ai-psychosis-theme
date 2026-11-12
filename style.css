@@ -1,0 +1,1458 @@
+/*
+ * ✨ AI Psychosis ✨
+ * A Beekeeper Studio theme containing every AI design trope at once.
+ *
+ * Each section is tagged with the trope(s) it commits. See README.md for the
+ * full list.
+ */
+
+/* ==========================================================================
+   Trope 20: Default typography. It's Inter. It's always Inter.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/inter-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/inter-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ==========================================================================
+   Seeds
+   Trope 1: indigo/violet, obviously.
+   Trope 12: near-black background, "premium dev tool".
+   ========================================================================== */
+
+.dark-theme {
+  --background: #07060f;
+  --base-gray: #6b6787;
+  --base-accent: #8b5cf6;
+  --base-purple: #a855f7;
+  --base-blue: #3b82f6;
+  --base-pink: #ec4899;
+  --base-green: #34d399;
+  --base-yellow: #fbbf24;
+  --base-orange: #fb923c;
+  --base-red: #fb7185;
+
+  /* Surfaces are see-through so the blobs can do their job (trope 7). */
+  --aip-glass: rgba(255, 255, 255, 0.045);
+  --aip-glass-strong: rgba(18, 14, 38, 0.72);
+  --aip-glass-border: rgba(255, 255, 255, 0.14);
+  --aip-editor: rgba(7, 6, 15, 0.55);
+  --aip-grid-line: rgba(139, 92, 246, 0.13);
+  --aip-blob-opacity: 0.55;
+  --aip-tint: rgba(139, 92, 246, 0.18);
+  --aip-muted: #a29fba;
+  --aip-input-border: rgba(255, 255, 255, 0.14);
+
+  /* Trope 12: everything glows. */
+  --aip-glow: 0 0 0 1px rgba(167, 139, 250, 0.55), 0 0 18px rgba(139, 92, 246, 0.55),
+    0 0 48px rgba(59, 130, 246, 0.3);
+  --aip-glow-soft: 0 0 0 1px rgba(167, 139, 250, 0.28), 0 0 24px rgba(139, 92, 246, 0.28);
+  --aip-shadow: 0 0 0 1px rgba(167, 139, 250, 0.22), 0 24px 60px -12px rgba(76, 29, 149, 0.6),
+    0 0 60px rgba(99, 102, 241, 0.22);
+  --aip-text-gradient: linear-gradient(90deg, #a78bfa 0%, #f472b6 50%, #fb923c 100%);
+}
+
+.light-theme {
+  --background: #fbfaff;
+  --base-gray: #8d89a6;
+  --base-accent: #7c3aed;
+  --base-purple: #9333ea;
+  --base-blue: #2563eb;
+  --base-pink: #db2777;
+  --base-green: #059669;
+  --base-yellow: #ca8a04;
+  --base-orange: #ea580c;
+  --base-red: #e11d48;
+
+  --aip-glass: rgba(255, 255, 255, 0.55);
+  --aip-glass-strong: rgba(255, 255, 255, 0.78);
+  --aip-glass-border: rgba(255, 255, 255, 0.9);
+  --aip-editor: rgba(255, 255, 255, 0.6);
+  --aip-grid-line: rgba(124, 58, 237, 0.1);
+  --aip-blob-opacity: 0.4;
+  --aip-tint: rgba(124, 58, 237, 0.12);
+  --aip-muted: #6f6b8a;
+  --aip-input-border: rgba(124, 58, 237, 0.22);
+
+  /* Trope 17: the same diffuse drop shadow on every container. */
+  --aip-glow: 0 0 0 1px rgba(124, 58, 237, 0.35), 0 10px 30px -6px rgba(124, 58, 237, 0.35);
+  --aip-glow-soft: 0 0 0 1px rgba(124, 58, 237, 0.14), 0 10px 30px -10px rgba(124, 58, 237, 0.25);
+  --aip-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1), 0 30px 60px -20px rgba(76, 29, 149, 0.28),
+    0 12px 24px -12px rgba(37, 99, 235, 0.18);
+  --aip-text-gradient: linear-gradient(90deg, #7c3aed 0%, #db2777 55%, #ea580c 100%);
+}
+
+/* ==========================================================================
+   Component tokens
+   ========================================================================== */
+
+.light-theme,
+.dark-theme {
+  /* Trope 1: the purple-to-blue gradient. */
+  --aip-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 45%, #3b82f6 100%);
+  --aip-gradient-hover: linear-gradient(135deg, #a78bfa 0%, #818cf8 45%, #60a5fa 100%);
+  --aip-font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --aip-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --app-bg: transparent;
+  --preloader-bg: var(--background);
+
+  /* Trope 17: over-rounded corners. One radius to rule them all. */
+  --btn-border-radius: 999px;
+  --btn-small-border-radius: 999px;
+  --input-border-radius: 12px;
+  --checkbox-border-radius: 7px;
+  --panel-border-radius: 24px;
+  --menu-border-radius: 18px;
+  --alert-border-radius: 18px;
+
+  /* Buttons */
+  --btn-primary-fg: #ffffff;
+  --btn-primary-bg: #7c5cf6;
+  --btn-primary-bg-hover: #8f74f8;
+  --btn-primary-shadow: var(--aip-glow);
+  --btn-flat-bg: var(--aip-glass);
+  --btn-flat-bg-hover: var(--aip-tint);
+  --btn-flat-shadow: inset 0 0 0 1px var(--aip-glass-border);
+
+  /* Inputs */
+  --input-bg: var(--aip-glass);
+  --input-border: 1px solid var(--aip-input-border);
+  --input-border-focus: 1px solid var(--primary-9);
+  --checkbox-checked-bg: var(--primary-9);
+  --checkbox-checked-fg: #ffffff;
+  --link-fg: var(--primary-11);
+  --selection-bg: rgba(139, 92, 246, 0.4);
+  --scrollbar-thumb: rgba(139, 92, 246, 0.45);
+
+  /* Chrome: all glass (trope 7) */
+  --titlebar-bg: var(--aip-glass);
+  --titlebar-inactive-bg: var(--aip-glass);
+  --sidebar-bg: var(--aip-glass);
+  --sidebar-rail-bg: transparent;
+  --sidebar-rail-fg: var(--primary-11);
+  --sidebar-rail-fg-hover: var(--primary-12);
+  --sidebar-rail-active-fg: #ffffff;
+  --statusbar-bg: transparent;
+  --statusbar-fg: #ffffff;
+  --tabs-header-bg: var(--aip-glass);
+  --tab-bg: transparent;
+  --tab-active-bg: var(--aip-tint);
+  --tab-active-fg: var(--gray-12);
+  --bottom-panel-bg: transparent;
+
+  /* Panels: frosted, thin white border, soft shadow */
+  --panel-bg: var(--aip-glass-strong);
+  --panel-bg-hover: var(--aip-tint);
+  --panel-shadow: var(--aip-shadow);
+  --panel-border: 1px solid var(--aip-glass-border);
+  --connection-form-card-bg: var(--aip-glass);
+  --overlay-bg: rgb(from var(--background) r g b / 0.55);
+  --overlay-subtle-bg: rgb(from var(--background) r g b / 0.35);
+
+  /* Nav pills */
+  --nav-pill-active-fg: var(--primary-11);
+  --nav-pill-active-shadow: inset 0 -2px var(--primary-9);
+
+  /* Tables */
+  --table-bg: transparent;
+  --table-header-selected-bg: var(--primary-9);
+  --table-header-selected-fg: #ffffff;
+  --table-row-odd-bg: rgba(139, 92, 246, 0.05);
+  --table-cell-bg-hover: var(--aip-tint);
+  --table-cell-selected-bg: var(--aip-tint);
+  --table-range-border: var(--primary-9);
+  --table-range-handle-bg: var(--pink-9);
+  --table-filter-bg: transparent;
+
+  /* Badges */
+  --badge-flat-bg: var(--aip-tint);
+  --badge-flat-fg: var(--primary-11);
+  --badge-primary-bg: var(--primary-9);
+  --badge-primary-fg: #ffffff;
+
+  /* Icons */
+  --icon-table-fg: var(--primary-11);
+  --icon-view-fg: var(--blue-11);
+  --icon-query-fg: var(--pink-11);
+
+  /* Editor */
+  --editor-bg: var(--aip-editor);
+  --editor-gutter-bg: transparent;
+  --editor-cursor-bg: var(--pink-9);
+  --editor-activeline-bg: rgba(139, 92, 246, 0.1);
+  --editor-activeline-gutter-bg: rgba(139, 92, 246, 0.1);
+  --editor-linenumber-fg: var(--primary-8);
+  --editor-linenumber-active-fg: var(--pink-11);
+  --editor-matchingbracket-bg: rgba(236, 72, 153, 0.3);
+
+  /* Syntax: purple, pink, and the rest of the gradient */
+  --editor-font-weight: 500;
+  --syntax-keyword: var(--purple-11);
+  --syntax-string: var(--pink-11);
+  --syntax-constant: var(--orange-11);
+  --syntax-variable: var(--gray-12);
+  --syntax-function: var(--blue-11);
+  --syntax-type: var(--blue-11);
+  --syntax-decorator: var(--pink-11);
+  --syntax-link: var(--blue-11);
+  --syntax-comment: var(--aip-muted);
+  --syntax-punctuation: var(--gray-11);
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+/* Trope 9: fade-in-up. No `to` frame, so nothing is left transformed. */
+@keyframes aip-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes aip-float-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, 5vh) scale(1.12); }
+}
+
+@keyframes aip-float-b {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50% { transform: translate(-7vw, -6vh) scale(0.92); }
+}
+
+@keyframes aip-shimmer {
+  to { background-position: 200% center; }
+}
+
+@keyframes aip-pulse {
+  0%, 100% { box-shadow: var(--aip-glow-soft); }
+  50% { box-shadow: var(--aip-glow); }
+}
+
+/* ==========================================================================
+   Trope 10: grid pattern background, fading out through a radial mask.
+   Trope 6: glowing blurred blobs floating behind everything for "depth".
+   ========================================================================== */
+
+body.light-theme,
+body.dark-theme {
+  background-color: var(--background);
+  font-family: var(--aip-font);
+  font-feature-settings: "cv11", "ss01", "ss03";
+  letter-spacing: -0.011em;
+}
+
+/* The grid, drawn on a dedicated layer so the mask only fades the grid. */
+:is(body.light-theme, body.dark-theme) .style-wrapper::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(var(--aip-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--aip-grid-line) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 40%, #000 25%, transparent 100%);
+}
+
+body.light-theme::before,
+body.dark-theme::before,
+body.light-theme::after,
+body.dark-theme::after {
+  content: "";
+  position: fixed;
+  z-index: -2;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: var(--aip-blob-opacity);
+}
+
+body.light-theme::before,
+body.dark-theme::before {
+  width: 58vw;
+  height: 58vw;
+  top: -24vw;
+  left: -12vw;
+  background: radial-gradient(circle at 35% 35%, #8b5cf6, #6366f1 45%, transparent 70%);
+  animation: aip-float-a 18s ease-in-out infinite;
+}
+
+body.light-theme::after,
+body.dark-theme::after {
+  width: 62vw;
+  height: 62vw;
+  right: -18vw;
+  bottom: -30vw;
+  background: radial-gradient(circle at 50% 50%, #3b82f6, #ec4899 55%, transparent 72%);
+  animation: aip-float-b 22s ease-in-out infinite;
+}
+
+/* App shell layers stay transparent so the blobs show through the glass. */
+.beekeeper-studio-wrapper,
+.interface,
+.interface-wrap,
+.split-container,
+.page-content,
+.core-tabs,
+.core-tabs > .tab-content,
+.tab-pane,
+.query-editor,
+.query-editor .top-panel,
+.query-editor .bottom-panel,
+.tabletable,
+.table-view-wrapper,
+.connection-main {
+  background: transparent !important;
+}
+
+/* The empty-state hints sit behind every open tab. Glass tabs would show them. */
+.core-tabs > .tab-content:has(> .tab-pane.active) > .empty-editor-group {
+  visibility: hidden;
+}
+
+/* ==========================================================================
+   Trope 20 (again): Inter, everywhere a sans-serif was.
+   ========================================================================== */
+
+:is(.light-theme, .dark-theme) :is(.beekeeper-studio-wrapper, .v--modal-box, .vue-portal-target),
+:is(.light-theme, .dark-theme) :is(button, input, select, textarea, .btn, x-button, x-label, x-menuitem) {
+  font-family: var(--aip-font);
+}
+
+/* ==========================================================================
+   Trope 7: glassmorphism everywhere.
+   Trope 12: glowing borders.
+   ========================================================================== */
+
+.titlebar {
+  backdrop-filter: blur(22px) saturate(170%);
+  border-bottom: 1px solid var(--aip-glass-border);
+}
+
+.sidebar,
+.global-items,
+.tabs-header,
+.table-filter,
+.query-editor .toolbar,
+.sidebar-heading {
+  backdrop-filter: blur(22px) saturate(170%);
+}
+
+.sidebar.primary-sidebar {
+  border-right: 1px solid var(--aip-glass-border);
+  box-shadow: 12px 0 40px -18px rgba(139, 92, 246, 0.55);
+}
+
+.sidebar.secondary-sidebar {
+  border-left: 1px solid var(--aip-glass-border);
+}
+
+.tabs-header {
+  border-bottom: 1px solid var(--aip-glass-border);
+}
+
+/* Modals: frosted, thin border, big radius, neon halo. */
+.v--modal-box.v--modal {
+  background: var(--aip-glass-strong) !important;
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--aip-glass-border);
+  border-radius: 28px !important;
+  box-shadow: var(--aip-shadow), var(--aip-glow) !important;
+  /* Trope 9 */
+  animation: aip-fade-up 0.55s var(--aip-ease) backwards;
+}
+
+.v--modal-overlay {
+  backdrop-filter: blur(6px);
+}
+
+/* Menus and popovers */
+x-menu,
+.flyout-nav ul ul,
+.vue-simple-context-menu,
+.tabulator-menu,
+.tabulator-popup-container,
+.BksContextMenu,
+.cm-tooltip {
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--aip-glass-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--aip-shadow) !important;
+  animation: aip-fade-up 0.35s var(--aip-ease) backwards;
+}
+
+/* ==========================================================================
+   Trope 1: purple-to-blue gradients on everything that can hold one.
+   Trope 3: the sparkle. Every primary action is now AI-powered.
+   Trope 9: every button scales up on hover.
+   ========================================================================== */
+
+.btn,
+x-button.btn {
+  transition: transform 0.35s var(--aip-ease), box-shadow 0.35s var(--aip-ease),
+    filter 0.35s var(--aip-ease);
+}
+
+.btn:not(.btn-icon):not([disabled]):hover,
+x-button.btn:not(.btn-icon):not([disabled]):hover {
+  transform: translateY(-1px) scale(1.05);
+}
+
+.btn.btn-primary,
+x-button.btn.btn-primary {
+  background-image: var(--aip-gradient) !important;
+  color: #fff !important;
+  border: 0;
+  box-shadow: var(--aip-glow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  text-shadow: 0 1px 8px rgba(30, 10, 80, 0.5);
+  font-weight: 600;
+}
+
+.btn.btn-primary:not([disabled]):hover,
+x-button.btn.btn-primary:not([disabled]):hover {
+  background-image: var(--aip-gradient-hover) !important;
+  box-shadow: var(--aip-glow), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.btn.btn-primary:not(.btn-icon)::before,
+x-button.btn.btn-primary:not(.btn-icon)::before {
+  content: "✨";
+  margin-right: 0.3em;
+  font-size: 0.9em;
+  text-shadow: none;
+}
+
+/* Split buttons only need one sparkle. Restraint. */
+x-buttons > x-button.btn.btn-primary:not(:first-child)::before {
+  content: none;
+}
+
+.btn.btn-primary .material-icons,
+.btn.btn-primary x-label {
+  color: #fff !important;
+}
+
+/* The titlebar is a gradient band with a glowing underline. */
+.titlebar-wrapper {
+  position: relative;
+}
+
+.titlebar-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #8b5cf6 20%, #3b82f6 50%, #ec4899 80%, transparent);
+  box-shadow: 0 0 16px 1px rgba(139, 92, 246, 0.9);
+  pointer-events: none;
+}
+
+/* Trope 4: gradient text on the "headline". */
+.titlebar-title span {
+  background: var(--aip-text-gradient);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  animation: aip-shimmer 6s linear infinite;
+}
+
+.titlebar-title::before {
+  content: "✨ ";
+}
+
+.titlebar-title::after {
+  content: " 🚀";
+}
+
+/* ==========================================================================
+   Trope 8: the CTA band. The status bar closes every screen.
+   ========================================================================== */
+
+.global-status-bar {
+  background: var(--aip-gradient) !important;
+  box-shadow: 0 -8px 40px -6px rgba(139, 92, 246, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+.global-status-bar,
+.global-status-bar .statusbar,
+.global-status-bar .connection-button,
+.global-status-bar x-button,
+.global-status-bar .material-icons {
+  color: #fff !important;
+}
+
+.global-status-bar .statusbar,
+.global-status-bar .connection-button,
+.global-status-bar .connection-button x-button {
+  background: transparent !important;
+}
+
+.global-status-bar .btn-flat {
+  background: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35) !important;
+}
+
+.statusbar > .expand::after {
+  content: "✨ Ready to 10x your queries? Get started →";
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 10px rgba(30, 10, 80, 0.6);
+}
+
+.statusbar > .expand {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.connection-type.badge {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   Sidebar rail
+   Trope 18: icons in tinted rounded squares.
+   ========================================================================== */
+
+.global-items .nav-item > span,
+.global-items .nav-item > i,
+.global-items .workspace-item > *:first-child,
+.add-workspace-button > *:first-child {
+  background: var(--aip-tint) !important;
+  border-radius: 11px !important;
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border);
+  transition: transform 0.35s var(--aip-ease), box-shadow 0.35s var(--aip-ease);
+}
+
+.global-items .nav-item:hover > span,
+.global-items .nav-item:hover > i {
+  transform: scale(1.12);
+}
+
+.global-items .nav-item.active > span,
+.global-items .nav-item.active > i,
+.global-items .workspace-item.active > *:first-child {
+  background: var(--aip-gradient) !important;
+  color: #fff !important;
+  box-shadow: var(--aip-glow);
+}
+
+/* ==========================================================================
+   Sidebar lists
+   Trope 2: emoji as icons.
+   Trope 16: cards with a coloured left border.
+   Trope 18: icons in tinted rounded squares.
+   Trope 9: fade-in-up, row by row.
+   ========================================================================== */
+
+/* Trope 4 + trope 2: gradient section labels, led by an emoji. */
+.list-heading .sub,
+.sidebar .sub {
+  background: var(--aip-text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.list-heading .sub::before {
+  content: "🗂️ ";
+  -webkit-text-fill-color: initial;
+}
+
+.saved-connection-list .list-heading .sub::before {
+  content: "⭐ ";
+}
+
+.recent-connection-list .list-heading .sub::before {
+  content: "⚡ ";
+}
+
+.list-heading .badge {
+  border-radius: 999px;
+  box-shadow: var(--aip-glow-soft);
+}
+
+.sidebar .list-item {
+  animation: aip-fade-up 0.5s var(--aip-ease) backwards;
+}
+
+.sidebar .list-item .list-item-btn {
+  border-left: 3px solid transparent;
+  border-radius: 12px;
+  transition: transform 0.35s var(--aip-ease), background 0.35s var(--aip-ease),
+    box-shadow 0.35s var(--aip-ease), border-color 0.35s var(--aip-ease);
+}
+
+.sidebar .list-item .list-item-btn:hover,
+.sidebar .list-item .list-item-btn.active,
+.sidebar .list-item.active .list-item-btn,
+.sidebar .list-item.selected .list-item-btn {
+  border-left-color: var(--primary-9);
+  background: var(--aip-tint);
+  box-shadow: var(--aip-glow-soft);
+}
+
+/* Entity icons: swap the icon font for emoji, park it in a pastel square. */
+.table-item .table-item-wrapper,
+.sidebar .list-item .item-icon {
+  border-radius: 6px;
+}
+
+.table-item .item-icon {
+  font-size: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: var(--aip-tint);
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border);
+  margin-right: 6px;
+}
+
+.table-item .item-icon::before {
+  content: "📊";
+  font-size: 11px;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  line-height: 1;
+}
+
+.table-item .item-icon.view-icon::before {
+  content: "🔮";
+}
+
+.table-item .item-icon.materialized-view-icon::before {
+  content: "💎";
+}
+
+.table-item .item-icon.routine-icon::before,
+.list-item .item-icon.routine-icon::before {
+  content: "🧠";
+}
+
+/* Saved connections: cards with a thick accent stripe (trope 16). */
+.connection-sidebar .list-item .list-item-btn {
+  border-left: 4px solid var(--primary-9);
+  background: var(--aip-glass);
+  box-shadow: var(--aip-glow-soft);
+  border-radius: 14px;
+  box-sizing: border-box;
+  max-width: calc(100% - 8px);
+  margin: 3px 0;
+}
+
+.sidebar .list-body,
+.sidebar .list {
+  overflow-x: hidden;
+}
+
+/* The list's bottom fade is derived from an opaque sidebar colour. */
+.sidebar .list-body::after {
+  display: none;
+}
+
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
+
+.nav-tabs .nav-link {
+  border-radius: 14px 14px 0 0;
+  transition: background 0.35s var(--aip-ease), box-shadow 0.35s var(--aip-ease);
+}
+
+.nav-tabs .nav-link.active {
+  box-shadow: inset 0 -2px 0 #8b5cf6, 0 0 22px rgba(139, 92, 246, 0.45);
+}
+
+/* The app fades long tab titles into an opaque tab colour. Ours is glass. */
+.nav-tabs .tab-action {
+  background: transparent !important;
+}
+
+/* Trope 2: 🚀 where an icon belonged. */
+.nav-tabs .item-icon.query {
+  font-size: 0 !important;
+}
+
+.nav-tabs .item-icon.query::before {
+  content: "🚀";
+  font-size: 12px;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+/* Trope 3: every tab is AI-powered. */
+.nav-tabs .nav-link.active .tab-title::after {
+  content: " ✨";
+}
+
+.nav-tabs .nav-item {
+  animation: aip-fade-up 0.45s var(--aip-ease) backwards;
+}
+
+/* ==========================================================================
+   Inputs
+   ========================================================================== */
+
+input.form-control,
+select.form-control,
+textarea.form-control,
+.filter-input,
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  backdrop-filter: blur(12px);
+  transition: box-shadow 0.35s var(--aip-ease), border-color 0.35s var(--aip-ease);
+}
+
+input.form-control:focus,
+select.form-control:focus,
+textarea.form-control:focus,
+.filter-input:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+  box-shadow: var(--aip-glow) !important;
+  outline: none;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.45);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8b5cf6, #3b82f6) !important;
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   Editor
+   Trope 10: a dot pattern behind the code.
+   ========================================================================== */
+
+.query-editor .BksTextEditor .cm-editor {
+  background-image: radial-gradient(var(--aip-grid-line) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+.cm-editor .cm-cursor {
+  box-shadow: 0 0 10px 1px var(--pink-9);
+}
+
+.cm-editor .cm-activeLine {
+  border-left: 3px solid var(--primary-9);
+  border-radius: 0 10px 10px 0;
+}
+
+.cm-editor .cm-line {
+  animation: aip-fade-up 0.5s var(--aip-ease) backwards;
+}
+
+.query-editor .toolbar {
+  border-top: 1px solid var(--aip-glass-border);
+  border-bottom: 1px solid var(--aip-glass-border);
+}
+
+/* ==========================================================================
+   Data tables
+   Trope 15: centre-aligned everything.
+   Trope 4: gradient text on column headers.
+   Trope 9: rows fade in and up.
+   ========================================================================== */
+
+.tabulator .tabulator-header {
+  backdrop-filter: blur(18px);
+  background: var(--aip-glass) !important;
+  border-bottom: 1px solid var(--aip-glass-border) !important;
+}
+
+.tabulator .tabulator-col:not(.tabulator-range-highlight):not(.tabulator-range-selected) .tabulator-col-title .title,
+.tabulator .tabulator-col:not(.tabulator-range-highlight):not(.tabulator-range-selected) .tabulator-col-title {
+  background: var(--aip-text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.tabulator .tabulator-col .tabulator-col-title,
+.tabulator .tabulator-cell,
+.tabulator .tabulator-cell pre {
+  text-align: center !important;
+}
+
+.tabulator .tabulator-cell pre {
+  font-family: var(--aip-font);
+}
+
+.tabulator .tabulator-row {
+  animation: aip-fade-up 0.55s var(--aip-ease) backwards;
+  transition: background 0.3s var(--aip-ease);
+}
+
+.tabulator .tabulator-row:hover {
+  background: var(--aip-tint) !important;
+}
+
+.tabulator .tabulator-col.tabulator-range-selected,
+.tabulator .tabulator-col.tabulator-range-highlight.tabulator-range-selected {
+  background-image: var(--aip-gradient) !important;
+}
+
+.tabulator .tabulator-range.tabulator-range-active,
+.tabulator .tabulator-range {
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.8), inset 0 0 12px rgba(139, 92, 246, 0.25);
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   Trope 5: the three-column feature card grid.
+   The keyboard shortcut hints become: icon on top, heading, grey text. ×6.
+   Trope 18: each emoji sits in a tinted rounded square.
+   ========================================================================== */
+
+.shortcut-hints {
+  width: min(640px, 92%) !important;
+  max-width: none !important;
+  text-align: center;
+}
+
+/* Trope 11 + trope 4: pill badge, then a headline with a gradient keyword. */
+.shortcut-hints::before {
+  content: "✨ Introducing keyboard shortcuts 2.0 →";
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-11);
+  background: var(--aip-tint);
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border), var(--aip-glow-soft);
+  margin-bottom: 14px;
+  animation: aip-fade-up 0.6s var(--aip-ease) backwards;
+}
+
+.shortcut-hints .shortcuts {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  align-content: center;
+  height: auto !important;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.shortcut-hints .shortcuts::before {
+  content: "Supercharge your workflow";
+  grid-column: 1 / -1;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  margin-bottom: 4px;
+  background: linear-gradient(90deg, var(--gray-12) 0%, var(--gray-12) 38%, #a78bfa 42%, #f472b6 72%, #fb923c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: aip-fade-up 0.7s var(--aip-ease) 0.05s backwards;
+}
+
+.shortcut-hints .shortcut-item {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 14px 10px 12px;
+  border-radius: 22px;
+  background: var(--aip-glass);
+  border: 1px solid var(--aip-glass-border);
+  border-top: 3px solid var(--primary-9);
+  box-shadow: var(--aip-glow-soft);
+  backdrop-filter: blur(18px) saturate(170%);
+  transition: transform 0.45s var(--aip-ease), box-shadow 0.45s var(--aip-ease);
+  animation: aip-fade-up 0.7s var(--aip-ease) backwards;
+}
+
+.shortcut-hints .shortcut-item:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--aip-glow);
+}
+
+.shortcut-hints .shortcut-item:nth-child(1) { animation-delay: 0.1s; }
+.shortcut-hints .shortcut-item:nth-child(2) { animation-delay: 0.18s; }
+.shortcut-hints .shortcut-item:nth-child(3) { animation-delay: 0.26s; }
+.shortcut-hints .shortcut-item:nth-child(4) { animation-delay: 0.34s; }
+.shortcut-hints .shortcut-item:nth-child(5) { animation-delay: 0.42s; }
+.shortcut-hints .shortcut-item:nth-child(6) { animation-delay: 0.5s; }
+
+.shortcut-hints .shortcut-item::before {
+  content: "🚀";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  font-size: 17px;
+  background: var(--aip-tint);
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border);
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.shortcut-hints .shortcut-item:nth-child(2)::before { content: "⚡"; }
+.shortcut-hints .shortcut-item:nth-child(3)::before { content: "🧠"; }
+.shortcut-hints .shortcut-item:nth-child(4)::before { content: "🔮"; }
+.shortcut-hints .shortcut-item:nth-child(5)::before { content: "🎯"; }
+.shortcut-hints .shortcut-item:nth-child(6)::before { content: "💎"; }
+
+.shortcut-hints .shortcut-label {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--gray-12);
+  text-align: center;
+  height: auto !important;
+  line-height: 1.3 !important;
+  flex: none !important;
+  width: auto !important;
+  padding: 0 !important;
+}
+
+.shortcut-hints .shortcut-wrapper {
+  height: auto !important;
+  width: auto !important;
+  flex: none !important;
+  padding: 0 !important;
+  justify-content: center;
+  color: var(--aip-muted);
+}
+
+/* Under a query editor there's less room, so the badge sits this one out. */
+.bottom-panel .shortcut-hints::before {
+  display: none;
+}
+
+.bottom-panel .shortcut-hints .shortcuts::before {
+  font-size: 20px;
+}
+
+.bottom-panel .layout-center {
+  overflow: auto;
+  align-items: safe center;
+  padding: 12px 0;
+}
+
+.shortcut-hints .btn-view-all {
+  background-image: var(--aip-gradient) !important;
+  color: #fff !important;
+  box-shadow: var(--aip-glow-soft);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.shortcut-hints .btn-view-all::before {
+  content: "✨ ";
+}
+
+/* ==========================================================================
+   Welcome screen = landing page.
+   Trope 8: hero, logo strip, quote card, CTA band. In that order. Always.
+   Trope 11: the pill badge above the headline.
+   Trope 4: gradient headline.
+   Trope 15: centre-aligned everything.
+   ========================================================================== */
+
+.connection-main .small-wrap {
+  text-align: center;
+}
+
+.empty-state.welcome::before {
+  content: "✨ New · Now with 100% more AI →";
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-11);
+  background: var(--aip-tint);
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border), var(--aip-glow-soft);
+  margin-bottom: 18px;
+  animation: aip-fade-up 0.6s var(--aip-ease) backwards;
+}
+
+.welcome-title {
+  font-size: 44px !important;
+  line-height: 1.08 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.045em;
+  background: linear-gradient(90deg, var(--gray-12) 0%, var(--gray-12) 30%, #a78bfa 36%, #f472b6 68%, #fb923c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 14px !important;
+  padding-bottom: 4px;
+  animation: aip-fade-up 0.7s var(--aip-ease) 0.08s backwards;
+}
+
+.empty-state.welcome p {
+  color: var(--aip-muted);
+  animation: aip-fade-up 0.7s var(--aip-ease) 0.16s backwards;
+}
+
+.empty-state.welcome .actions {
+  justify-content: center;
+  animation: aip-fade-up 0.7s var(--aip-ease) 0.24s backwards;
+}
+
+.connection-main .pitch {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 10px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--aip-glass-border);
+  border-left: 4px solid var(--primary-9);
+  background: var(--aip-glass);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--aip-glow-soft);
+  animation: aip-fade-up 0.7s var(--aip-ease) 0.32s backwards;
+}
+
+/* Logo strip + quote card, both invented. */
+.empty-state.welcome::after {
+  content: "TRUSTED BY 10,000+ FORWARD-THINKING TEAMS\A ◆ ACME      ▲ GLOBEX      ● INITECH      ■ UMBRELLA      ✦ SOYLENT";
+  white-space: pre-wrap;
+  display: block;
+  margin-top: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 2.6;
+  color: var(--aip-muted);
+  opacity: 0.85;
+  animation: aip-fade-up 0.7s var(--aip-ease) 0.4s backwards;
+}
+
+.connection-main .small-wrap::after {
+  content: "⭐⭐⭐⭐⭐\A “This changed how our team thinks about synergy.”\A — Sarah K., Chief Vibes Officer";
+  white-space: pre-wrap;
+  display: block;
+  width: fit-content;
+  margin: 26px auto 0;
+  padding: 16px 26px;
+  border-radius: 22px;
+  border: 1px solid var(--aip-glass-border);
+  border-top: 3px solid var(--pink-9);
+  background: var(--aip-glass);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--aip-glow-soft);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray-11);
+  animation: aip-fade-up 0.7s var(--aip-ease) 0.5s backwards;
+}
+
+.app-version {
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Connection form
+   Trope 14: the floating hero mockup. A fake browser frame, tilted, glowing.
+   ========================================================================== */
+
+.connection-form-card {
+  position: relative;
+  text-align: left;
+  padding-top: 52px !important;
+  border: 1px solid var(--aip-glass-border);
+  border-radius: 22px !important;
+  background: var(--aip-glass) !important;
+  backdrop-filter: blur(26px) saturate(180%);
+  box-shadow: var(--aip-shadow), 0 60px 120px -30px rgba(99, 102, 241, 0.65);
+  transform: perspective(1400px) rotateX(6deg) rotateY(-6deg) rotateZ(0.6deg);
+  transform-origin: 50% 40%;
+  transition: transform 0.8s var(--aip-ease), box-shadow 0.8s var(--aip-ease);
+  animation: aip-fade-up 0.8s var(--aip-ease) backwards;
+}
+
+/* It straightens out the moment you actually want to use it. */
+.connection-form-card:hover,
+.connection-form-card:focus-within {
+  transform: perspective(1400px) rotateX(0) rotateY(0) rotateZ(0);
+  box-shadow: var(--aip-shadow), var(--aip-glow);
+}
+
+/* Browser chrome: traffic lights and a URL pill. */
+.connection-form-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  border-radius: 22px 22px 0 0;
+  border-bottom: 1px solid var(--aip-glass-border);
+  background:
+    radial-gradient(circle at 20px 18px, #ff5f57 5px, transparent 5.5px),
+    radial-gradient(circle at 38px 18px, #febc2e 5px, transparent 5.5px),
+    radial-gradient(circle at 56px 18px, #28c840 5px, transparent 5.5px),
+    var(--aip-tint);
+}
+
+.connection-form-card::after {
+  content: "🔒 app.synergy.ai/dashboard";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 44px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  line-height: 16px;
+  color: var(--aip-muted);
+  background: var(--aip-glass);
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border);
+  white-space: nowrap;
+}
+
+/* Trope 4: gradient headings wherever there's a heading. */
+.card-title,
+.dialog-c-title,
+.base-modal-title,
+.config-page-header h2,
+.advanced-heading,
+.v--modal-box h1,
+.v--modal-box h2,
+.v--modal-box h3 {
+  background: var(--aip-text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  width: fit-content;
+}
+
+/* Trope 15: modal headers get centred too. */
+.base-modal-header {
+  justify-content: center;
+  position: relative;
+}
+
+.base-modal-header .base-modal-title {
+  margin: 0 auto;
+}
+
+.base-modal-title:not(:empty)::before,
+.card-title::before {
+  content: "✨ ";
+  -webkit-text-fill-color: initial;
+}
+
+/* ==========================================================================
+   Connection type picker
+   Trope 13: a bento grid. Mismatched rounded tiles in a mosaic.
+   ========================================================================== */
+
+.connection-types {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 58px;
+  grid-auto-flow: dense;
+  gap: 10px;
+  padding: 6px 4px 10px;
+}
+
+.connection-types .connection-type {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: auto !important;
+  padding: 8px !important;
+  text-align: center;
+  border-radius: 20px !important;
+  border: 1px solid var(--aip-glass-border);
+  background: var(--aip-glass);
+  box-shadow: var(--aip-glow-soft);
+  transition: transform 0.45s var(--aip-ease), box-shadow 0.45s var(--aip-ease),
+    background 0.45s var(--aip-ease);
+  animation: aip-fade-up 0.6s var(--aip-ease) backwards;
+}
+
+.connection-types .connection-type:nth-child(7n + 1) {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(59, 130, 246, 0.18));
+}
+
+.connection-types .connection-type:nth-child(7n + 4) {
+  grid-column: span 2;
+}
+
+.connection-types .connection-type:nth-child(7n + 6) {
+  grid-row: span 2;
+  background: linear-gradient(180deg, rgba(236, 72, 153, 0.22), rgba(139, 92, 246, 0.12));
+}
+
+.connection-types .connection-type:nth-child(7n + 1) .database-icon {
+  width: 44px !important;
+  height: 44px !important;
+  padding: 10px !important;
+}
+
+.connection-types .connection-type:nth-child(7n + 1) .database-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.connection-types .connection-type:hover,
+.connection-types .connection-type:has(input:checked),
+.connection-types .connection-type.active,
+.connection-types .connection-type.selected {
+  transform: scale(1.05);
+  box-shadow: var(--aip-glow);
+  background: var(--aip-tint);
+}
+
+.connection-types .connection-type input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Trope 18 */
+.connection-types .database-icon {
+  box-sizing: content-box;
+  padding: 6px;
+  border-radius: 10px;
+  background: var(--aip-tint);
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border);
+}
+
+/* ==========================================================================
+   Appearance window
+   Trope 19: three-tier pricing. Light / Dark / Auto, with the middle tier
+   scaled up, outlined, and topped with a ribbon.
+   Trope 17: every tile gets the same big radius and soft shadow.
+   ========================================================================== */
+
+.mode-options {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 16px 6px 6px !important;
+  overflow: visible !important;
+}
+
+.mode-options .mode-option {
+  position: relative;
+  overflow: visible !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.mode-options .mode-option .mode-option-content {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  min-width: 62px;
+  padding: 8px 10px !important;
+  border-radius: 16px !important;
+  border: 1px solid var(--aip-glass-border);
+  background: var(--aip-glass) !important;
+  box-shadow: var(--aip-glow-soft);
+  font-weight: 700;
+  transition: transform 0.45s var(--aip-ease), box-shadow 0.45s var(--aip-ease);
+}
+
+.mode-options .mode-option .mode-option-content::after {
+  content: "$0/mo";
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--aip-muted);
+}
+
+.mode-options .mode-option:nth-child(2) .mode-option-content {
+  transform: scale(1.14);
+  border: 2px solid var(--primary-9);
+  box-shadow: var(--aip-glow);
+}
+
+.mode-options .mode-option:nth-child(2) .mode-option-content::after {
+  content: "$49/mo";
+}
+
+.mode-options .mode-option:nth-child(3) .mode-option-content::after {
+  content: "Contact us";
+}
+
+.mode-options .mode-option:nth-child(2)::before {
+  content: "✨ MOST POPULAR";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: #fff;
+  background: var(--aip-gradient);
+  box-shadow: var(--aip-glow-soft);
+}
+
+.mode-options .mode-option input:checked + .mode-option-content {
+  background: var(--aip-gradient) !important;
+  color: #fff !important;
+}
+
+.mode-options .mode-option input:checked + .mode-option-content::after {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.mode-options .mode-option:hover .mode-option-content {
+  transform: scale(1.08);
+}
+
+.mode-options .mode-option:nth-child(2):hover .mode-option-content {
+  transform: scale(1.2);
+}
+
+/* Theme tiles */
+.theme-list .theme-item {
+  padding: 10px !important;
+  border-radius: 20px;
+  border: 1px solid var(--aip-glass-border);
+  border-top: 3px solid var(--primary-9);
+  background: var(--aip-glass);
+  box-shadow: var(--aip-glow-soft);
+  transition: transform 0.45s var(--aip-ease), box-shadow 0.45s var(--aip-ease);
+  animation: aip-fade-up 0.6s var(--aip-ease) backwards;
+}
+
+.theme-list .theme-item:hover,
+.theme-list .theme-item.selected {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: var(--aip-glow);
+}
+
+.theme-list .theme-preview-frame {
+  border-radius: 14px !important;
+  overflow: hidden;
+}
+
+.config-nav .nav-btn.active {
+  background: var(--aip-gradient) !important;
+  color: #fff !important;
+  box-shadow: var(--aip-glow-soft);
+}
+
+.control-row {
+  animation: aip-fade-up 0.6s var(--aip-ease) backwards;
+}
+
+/* ==========================================================================
+   Notifications and alerts
+   Trope 16: rounded card, thick accent stripe on one edge.
+   ========================================================================== */
+
+.noty_bar,
+.alert {
+  border-radius: 18px !important;
+  border: 1px solid var(--aip-glass-border) !important;
+  border-left: 4px solid var(--primary-9) !important;
+  backdrop-filter: blur(22px) saturate(180%);
+  box-shadow: var(--aip-shadow) !important;
+  animation: aip-fade-up 0.6s var(--aip-ease) backwards;
+}
+
+.noty_bar.noty_type__success,
+.alert.alert-success {
+  border-left-color: var(--green-9) !important;
+}
+
+.noty_bar.noty_type__error,
+.alert.alert-danger {
+  border-left-color: var(--red-9) !important;
+}
+
+.noty_bar.noty_type__warning,
+.alert.alert-warning {
+  border-left-color: var(--orange-9) !important;
+}
+
+/* ==========================================================================
+   Trope 17, mopping up: anything still square gets rounded.
+   ========================================================================== */
+
+.badge,
+kbd,
+.shortcut span {
+  border-radius: 999px !important;
+}
+
+.shortcut span {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  box-shadow: inset 0 0 0 1px var(--aip-glass-border);
+}
+
+.data-select-wrap {
+  border-radius: 14px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .connection-form-card {
+    transform: none;
+  }
+}
